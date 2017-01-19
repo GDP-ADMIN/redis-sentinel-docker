@@ -1,0 +1,33 @@
+node1:
+    build: master
+    ports:
+        - "6379:6379"
+        - "5000:5000"
+    volumes:
+        - ./redis-node1.conf:/tmp/redis.conf
+        - ./redis-sentinel1.conf:/tmp/sentinel.conf
+
+node2:
+    build: master
+    ports:
+        - "6380:6380"
+        - "5001:5001"
+    volumes:
+        - ./redis-node2.conf:/tmp/redis.conf
+        - ./redis-sentinel2.conf:/tmp/sentinel.conf
+
+sentinel1:
+    image: redis
+    command: redis-sentinel /tmp/sentinel.conf
+    volumes:
+        - ./redis-sentinel3.conf:/tmp/sentinel.conf
+    ports:
+        - "5002:5002"
+
+sentinel2:
+    image: redis
+    command: redis-sentinel /tmp/sentinel.conf
+    volumes:
+        - ./redis-sentinel4.conf:/tmp/sentinel.conf
+    ports:
+        - "5003:5003"
